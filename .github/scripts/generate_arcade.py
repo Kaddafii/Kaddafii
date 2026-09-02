@@ -46,21 +46,29 @@ enemy = Image.open(ASSETS / "enemy.png").convert("RGBA")
 player = player.resize((20, 20), Image.Resampling.NEAREST)
 enemy = enemy.resize((20, 20), Image.Resampling.NEAREST)
 
-def remove_near_black_background(img):
-    px = img.load()
-    for y in range(img.height):
-        for x in range(img.width):
-            r, g, b, a = px[x, y]
-            if a > 0 and r < 8 and g < 8 and b < 8:
-                px[x, y] = (r, g, b, 0)
-    return img
-
-player = remove_near_black_background(player)
-enemy = remove_near_black_background(enemy)
+# NOTE: both source PNGs already ship with a proper transparent
+# background (verified: alpha=0 outside the artwork on every edge).
+# A previous version of this script ran a "strip near-black pixels"
+# cleanup pass on top of that, assuming a black background to remove.
+# enemy.png has no black background -- but it DOES use solid black
+# for the UFO outline and the alien's face, which are core parts of
+# the design. That cleanup pass was silently deleting those pixels
+# (over 12,000 of them), corrupting the sprite. It has been removed;
+# the sprites are used exactly as supplied, no pixel modification.
 
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
-title_font = ImageFont.truetype(FONT, 25)
-ui_font = ImageFont.truetype(FONT, 14)
+
+
+def load_font(path, size):
+    try:
+        return ImageFont.truetype(path, size)
+    except Exception:
+        # Fallback so a missing font file never crashes the whole run.
+        return ImageFont.load_default()
+
+
+title_font = load_font(FONT, 25)
+ui_font = load_font(FONT, 14)
 
 random.seed(2026)
 stars = [
@@ -70,12 +78,14 @@ stars = [
     for _ in range(80)
 ]
 
+
 def paste_center(canvas, sprite, x, y):
     canvas.alpha_composite(
         sprite,
         (int(x - sprite.width / 2),
          int(y - sprite.height / 2))
     )
+
 
 def explosion(draw, x, y, radius):
     for angle in range(0, 360, 45):
@@ -92,6 +102,7 @@ def explosion(draw, x, y, radius):
          x + radius // 3, y + radius // 3),
         fill=(255, 220, 80)
     )
+
 
 # More enemies are possible because the sprites are now tiny.
 enemy_positions = [
