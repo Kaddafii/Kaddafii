@@ -137,10 +137,18 @@ The application focuses on helping users discover and manage information related
 
 ---
 
-## 🐍 Contribution Snake
+## 🎮 Kaddafii Code Invaders
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Kaddafii/Kaddafii/output/github-contribution-grid-snake-dark.svg" alt="GitHub Contribution Snake"/>
+  <img
+    src="https://raw.githubusercontent.com/Kaddafii/Kaddafii/output/arcade.gif"
+    alt="Kaddafii Code Invaders"
+    width="900"
+  />
+</p>
+
+<p align="center">
+  <sub>Every contribution is a bullet. Every project is a level.</sub>
 </p>
 
 ---
