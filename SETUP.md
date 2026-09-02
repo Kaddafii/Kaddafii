@@ -1,26 +1,38 @@
-# Kaddafii Code Invaders — Your Sprites
+# Kaddafii Code Invaders — Fixed 20px Edition
 
-This package uses the two PNG files supplied in the conversation:
+This version fixes the previous workflow error and makes both supplied game sprites much smaller.
 
-- `.github/scripts/assets/player.png` → your fighter jet
-- `.github/scripts/assets/enemy.png` → your UFO/alien
+## Sprite size
 
-They are only resized with nearest-neighbor scaling so the pixel-art style is retained.
+```text
+player.png → 20 × 20 px
+enemy.png  → 20 × 20 px
+```
 
-## Install into Kaddafii/Kaddafii
+The original uploaded PNGs are included unchanged in:
+
+```text
+.github/scripts/assets/
+├── player.png
+└── enemy.png
+```
+
+The generator only scales them to 20×20 at runtime using nearest-neighbor.
+
+## Structure
 
 ```text
 .github/
-├── scripts/
-│   ├── generate_arcade.py
-│   └── assets/
-│       ├── player.png
-│       └── enemy.png
-└── workflows/
-    └── arcade.yml
+├── workflows/
+│   └── arcade.yml
+└── scripts/
+    ├── generate_arcade.py
+    └── assets/
+        ├── player.png
+        └── enemy.png
 ```
 
-Add this to README.md:
+## README
 
 ```html
 ## 🎮 Kaddafii Code Invaders
@@ -38,21 +50,22 @@ Add this to README.md:
 </p>
 ```
 
-Then:
+## Run
 
-1. Commit and push the files to `main`.
-2. Open `Actions`.
-3. Select `Update Kaddafii Code Invaders`.
-4. Click `Run workflow`.
-5. Wait for the workflow to finish.
-6. The GIF is published to the `output` branch.
+1. Replace the old `.github` folder with this version.
+2. Commit and push to `main`.
+3. Open `Actions`.
+4. Select `Update Kaddafii Code Invaders`.
+5. Click `Run workflow`.
 
-The workflow also regenerates the GIF once per day.
+The workflow now creates `arcade-output` before fetching the GitHub contribution data.
 
-## Activity mapping
+It publishes the generated GIF to the `output` branch.
+
+## Dynamic mapping
 
 - Total contributions → SCORE
 - Total contributions → LEVEL
 - Last 7 days → bullet count
 - Last 7 days → player movement
-- Recent activity → number of enemies
+- Recent activity → enemy count

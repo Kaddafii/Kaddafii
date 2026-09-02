@@ -14,9 +14,15 @@ permissions:
 jobs:
   arcade:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout main branch
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create output directory
+        run: mkdir -p arcade-output
 
       - name: Fetch GitHub contribution data
         env:
@@ -51,13 +57,33 @@ jobs:
       - name: Install Pillow
         run: python -m pip install pillow
 
-      - name: Generate GIF using Kaddafii sprites
+      - name: Generate arcade GIF
         run: python .github/scripts/generate_arcade.py
 
-      - name: Publish GIF
-        uses: crazy-max/ghaction-github-pages@v5
-        with:
-          build_dir: arcade-output
-          target_branch: output
+      - name: Publish arcade GIF to output branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          cp arcade-output/arcade.gif /tmp/arcade.gif
+
+          git fetch origin output:output || true
+
+          if git show-ref --verify --quiet refs/remotes/origin/output; then
+            git checkout output
+          else
+            git checkout --orphan output
+            git rm -rf . || true
+          fi
+
+          cp /tmp/arcade.gif ./arcade.gif
+          git add arcade.gif
+
+          if git diff --cached --quiet; then
+            echo "No arcade changes to publish."
+          else
+            git commit -m "chore: update code invaders"
+            git push origin output
+          fi
