@@ -36,6 +36,43 @@ sprite.
 I ran the generator locally against both sprites and confirmed the UFO now
 renders with its full black outline and alien face intact.
 
+## Round 2: real collisions, and the GIF not autoplaying
+
+Three more issues were reported and fixed in `generate_arcade.py`:
+
+**Bullets passed through enemies.** The old script drew bullets and the
+"explosion effect" as two independent, purely time-based patterns — they had
+no idea where each other actually was, so a bullet visually flying straight
+through a UFO with no reaction was expected behavior, not a glitch. The
+script now runs an actual per-frame simulation before drawing anything:
+each bullet has a real spawn frame and position, travels upward at a fixed
+speed, and is checked every frame against every enemy's real position. The
+instant a bullet's position overlaps an enemy, that bullet is marked
+resolved and is never drawn again — it can't pass through.
+
+**Explosion timing didn't match a hit.** Previously the explosion effect
+fired on a fixed `frame % 28` cycle regardless of whether anything was
+actually hit. Now the explosion only starts on the exact frame a collision
+is detected, at the enemy's exact position, and that enemy is skipped from
+normal rendering for `EXPLOSION_FRAMES` (10 frames) before it resumes its
+normal flight path — so hit and explosion are now the same event.
+
+**"Had to press Play" / GIF not auto-animating.** A real GIF embedded via
+`<img>` always autoplays in a browser — there's no play button on a normal
+`<img>` tag. What causes a "click to play" thumbnail on GitHub is usually
+the file being large: GitHub shows a static first frame with a play button
+for big animated images to save bandwidth, instead of animating inline. The
+previous script saved each frame with its own independently-computed color
+palette, which bloats GIF file size and can also cause slight color
+flicker between frames. The script now builds one shared color palette from
+a sample of frames and quantizes every frame to it before saving
+(`palette_source` + `quantize(palette=...)`), plus `optimize=True`. This
+keeps the file meaningfully smaller and the colors stable frame-to-frame,
+which should let it autoplay normally. If it's still showing a play button
+after this, the file may just be larger than GitHub's autoplay threshold for
+your account/plan — cutting `FRAMES` or the canvas size further would shrink
+it more.
+
 ## Sprite size
 
 ```text
