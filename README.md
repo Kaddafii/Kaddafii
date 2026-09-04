@@ -40,7 +40,7 @@ A web-based employee attendance system designed to help manage employee presence
 
 **Technologies**
 
-`Laravel` `MySQL` `Web Application`
+`CodeIgniter 3` `MySQL`
 
 **Focus**
 
