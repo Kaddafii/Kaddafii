@@ -123,8 +123,12 @@ The application focuses on helping users discover and manage information related
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Kaddafii&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Kaddafii&layout=compact&theme=github_dark&hide_border=true" />
+  <a href="https://github.com/anuraghazra/github-readme-stats">
+    <img height="170" src="https://github-readme-stats.vercel.app/api?username=Kaddafii&show_icons=true&theme=github_dark&hide_border=true&rank_icon=github&cache_seconds=86400" />
+  </a>
+  <a href="https://github.com/anuraghazra/github-readme-stats">
+    <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Kaddafii&layout=compact&theme=github_dark&hide_border=true&cache_seconds=86400" />
+  </a>
 </p>
 
 ---
@@ -132,17 +136,15 @@ The application focuses on helping users discover and manage information related
 ## 📈 Contribution Graph
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=Kaddafii&theme=github-compact&hide_border=true" />
+  <a href="https://github.com/Ashutosh00710/github-readme-activity-graph">
+    <img src="https://github-readme-activity-graph.vercel.app/graph?username=Kaddafii&theme=github-compact&hide_border=true&cache_seconds=86400" />
+  </a>
 </p>
-
 ---
-
-## 🎮 Kaddafii Code Invaders
 
 <p align="center">
   <img
     src="https://raw.githubusercontent.com/Kaddafii/Kaddafii/output/arcade.gif"
-    alt="Kaddafii Code Invaders"
     width="900"
   />
 </p>
